@@ -1,0 +1,33 @@
+local jobId = game.JobId
+print("Current server's JobId:", jobId)
+
+-- Try to copy to clipboard (this works in Studio)
+if setClipboard then
+    setClipboard(jobId)
+    print("JobId has been copied to clipboard!")
+else
+    print("Cannot copy to clipboard. Please check if setClipboard is supported.")
+end
+
+local function displayJobId()
+    -- Wait for LocalPlayer to be available
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer or Players:GetPropertyChangedSignal("LocalPlayer"):Wait()
+    
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "JobIdDisplay"
+    screenGui.Parent = player:WaitForChild("PlayerGui")
+
+    local textLabel = Instance.new("TextLabel", screenGui)
+    textLabel.Size = UDim2.new(0, 400, 0, 50)
+    textLabel.Position = UDim2.new(0.5, -200, 0, 50)
+    textLabel.Text = "JobId: " .. jobId
+    textLabel.TextScaled = true
+    textLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.BorderSizePixel = 0
+    textLabel.Font = Enum.Font.SourceSansBold
+end
+
+-- Call the function to display the JobId
+displayJobId()
